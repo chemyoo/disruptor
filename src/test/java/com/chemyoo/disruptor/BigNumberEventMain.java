@@ -26,7 +26,7 @@ public class BigNumberEventMain {
         BigNumberEventFactory factory = new BigNumberEventFactory();
  
         //设置ringBuffer大小，必须为2的n指数被，这样才能通过位运算，保证速度
-        int ringBufferSize = 1024*1024;
+        int ringBufferSize = 1024 * 1024;
  
         //最后一个参数为指定声明disruptor的策略
         //BlockingWaitStrategy  最低效的策略，但其对cpu4de消耗最小，并且在各种环境下能提供更加一致的性能表现
@@ -37,7 +37,8 @@ public class BigNumberEventMain {
         Disruptor<BigNumber> disruptor = new Disruptor<BigNumber>(factory,ringBufferSize,executorService,ProducerType.SINGLE, new YieldingWaitStrategy());
  
         //连接消费事件
-        disruptor.handleEventsWith(new BigNumberEventHandler());
+        BigNumberEventHandler eventHandler = new BigNumberEventHandler();
+        disruptor.handleEventsWith(eventHandler);
         //启动
         disruptor.start();
  
@@ -45,12 +46,17 @@ public class BigNumberEventMain {
         RingBuffer<BigNumber> ringBuffer = disruptor.getRingBuffer();
  
         BigNumberEventProducer producer = new BigNumberEventProducer(ringBuffer);
+        long end = 1000 * 1000 * 1000L;
         ByteBuffer buf = ByteBuffer.allocate(8);
-		long end = (10 * 1000 * 1000 * 1000);
-        for(long i = 0; i < end; i++){
+        TimeMonitor monitor = new TimeMonitor();
+        monitor.timeStart("disruptor");
+        for(long i = 0; i <= end; i++){
             buf.putLong(0,i);
             producer.onData(buf);
         }
+        // 500000000499999999
+        // 499402538087083620
+        monitor.timeEnd();
         disruptor.shutdown();//关闭disruptor，方法会阻塞，直到所有事件都得到处理
         executorService.shutdown();//关闭线程池，如果需要的话必须手动关闭，disruptor在shutdown时不会自动关闭线程池
     }

@@ -11,7 +11,7 @@ import java.math.BigInteger;
 public class BigNumber {
 	
 	private BigInteger value;
-
+	
 	/**
 	 * @return the value
 	 */

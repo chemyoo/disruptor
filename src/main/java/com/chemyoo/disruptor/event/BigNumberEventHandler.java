@@ -10,8 +10,8 @@ import com.lmax.disruptor.EventHandler;
  * @description class description
  */
 public class BigNumberEventHandler implements EventHandler<BigNumber> {
-
-	public void onEvent(BigNumber event, long sequence, boolean endOfBatch) throws Exception {
+	
+	public synchronized void onEvent(BigNumber event, long sequence, boolean endOfBatch) throws Exception {
 		System.err.println(event.getValue());
 	}
 
