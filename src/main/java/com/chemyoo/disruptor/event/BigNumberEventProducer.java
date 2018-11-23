@@ -28,7 +28,7 @@ public class BigNumberEventProducer {
             //2.用上面的索引取出一个空事件用于填充（获取该序号对应的事件对象）
         	BigNumber event = ringBuffer.get(sequence);
             //3.获取要通过对象传递的业务数据
-            event.setValue(BigInteger.valueOf(buffer.getLong(0)));
+            event.setIndex(buffer.getLong(0));
         } catch (Exception e) {
             // none
         } finally {

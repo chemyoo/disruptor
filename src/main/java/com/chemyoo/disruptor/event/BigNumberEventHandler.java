@@ -1,5 +1,7 @@
 package com.chemyoo.disruptor.event;
 
+import java.math.BigInteger;
+
 import com.chemyoo.disruptor.BigNumber;
 import com.lmax.disruptor.EventHandler;
 
@@ -11,8 +13,13 @@ import com.lmax.disruptor.EventHandler;
  */
 public class BigNumberEventHandler implements EventHandler<BigNumber> {
 	
+	private BigInteger summary = BigInteger.ZERO;
+	
 	public void onEvent(BigNumber event, long sequence, boolean endOfBatch) throws Exception {
-		System.err.println(event.getValue());
+		summary = summary.add(event.getValue());
 	}
 
+	public BigInteger getSummary() {
+		return this.summary;
+	}
 }

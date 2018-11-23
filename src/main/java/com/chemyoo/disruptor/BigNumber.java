@@ -10,20 +10,29 @@ import java.math.BigInteger;
  */
 public class BigNumber {
 	
-	private BigInteger value;
+	private BigInteger value = BigInteger.ZERO;
+	
+	private long index;
+	
+	private long base = 1000 * 1000 * 100L;
 	
 	/**
 	 * @return the value
 	 */
 	public BigInteger getValue() {
+		long start = (index - 1) * base + 1;
+		long end = start + base;
+		for(long i = start; i < end; i ++) {
+			value = value.add(BigInteger.valueOf(i));
+		}
 		return value;
 	}
 
 	/**
 	 * @param value the value to set
 	 */
-	public void setValue(BigInteger value) {
-		this.value = value;
+	public void setIndex(long index) {
+		this.index = index;
 	}
 	
 }
