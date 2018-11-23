@@ -30,9 +30,9 @@
 	</dependency>
 	
 	<dependency>
-	    <groupId>com.chemyoo</groupId>
+	    <groupId>com.chemyoo.other</groupId>
 	    <artifactId>monitor</artifactId>
-	    <version>v1.0</version>
+	    <version>1.0</version>
 	</dependency>
 	
   </dependencies>

@@ -4,7 +4,7 @@ package com.chemyoo.disruptor;
 import com.chemyoo.disruptor.event.BigNumberEventFactory;
 import com.chemyoo.disruptor.event.BigNumberEventHandler;
 import com.chemyoo.disruptor.event.BigNumberEventProducer;
-import com.chemyoo.monitor.TimeMonitor;
+import com.chemyoo.other.monitor.TimeMonitor;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.YieldingWaitStrategy;
 import com.lmax.disruptor.dsl.Disruptor;
@@ -52,7 +52,7 @@ public class BigNumberEventMain {
         long end = 1;
         ByteBuffer buf = ByteBuffer.allocate(8);
         TimeMonitor monitor = new TimeMonitor();
-        monitor.timeStart("disruptor");
+        monitor.timeStart(BigNumberEventMain.class);
         for(long i = 1; i <= end; i++){
             buf.putLong(0,i);
             producer.onData(buf);

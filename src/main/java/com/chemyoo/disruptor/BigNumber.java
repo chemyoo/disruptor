@@ -14,7 +14,7 @@ public class BigNumber {
 	
 	private long index;
 	
-	private long base = 1000 * 1000 * 100L;
+	private long base = 1000 * 1000L;
 	
 	/**
 	 * @return the value
